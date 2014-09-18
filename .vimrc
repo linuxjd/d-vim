@@ -440,27 +440,28 @@ endfunc
 
 "添加版权声明
 "添加或更新头
-autocmd BufNewFile,BufRead *.php exec ":call TitleDet()"
+autocmd BufNewFile *.php exec ":call TitleDet()"
 
 func AddTitle()
+    execute 'g/<?php/d' 
     call append(0,"<?php")
     call append(1,"/****************************************************")
     call append(2," * Description: ")
-    call append(3," * Author:   黄锦东")
-    call append(4," * Email:    deDoyle@163.com")
-    call append(5," * Created:       ".strftime("%Y-%m-%d %H:%M"))
-    call append(6," * Last modified: ".strftime("%Y-%m-%d %H:%M"))
-    call append(7," * Filename: ".expand("%:t"))
+    call append(3," * Author:\t\t\t黄锦东")
+    call append(4," * Email:\t\t\tdeDoyle@163.com")
+    call append(5," * Created:\t\t\t".strftime("%Y-%m-%d %H:%M"))
+    call append(6," * Last modified:\t".strftime("%Y-%m-%d %H:%M"))
+    call append(7," * Filename:\t\t".expand("%:t"))
     call append(8," ***************************************************/")
 endf
-
+"
 "更新最近修改时间和文件名
 func UpdateTitle()
     normal m'
-    execute '/* *Last modified: /s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
+    execute '/ * Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
     normal ''
     normal mk
-    execute '/* *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
+    execute '/ * Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
     execute "noh"
     normal 'k
 endf
@@ -469,12 +470,12 @@ endf
 "如果没有的话，代表没有添加过作者信息，需要新添加；
 "如果有的话，那么只需要更新即可
 func TitleDet()
-    let n=7
-    "默认为添加
-    let line = getline(n)
+    let line = getline(7)
     if line =~ '^\s\*\s*\S*Last\smodified:\S*.*$'
         call UpdateTitle()
         return
     endif
     call AddTitle()
 endf
+
+map <F4> :call TitleDet()<CR>
