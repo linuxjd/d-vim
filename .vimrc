@@ -470,11 +470,15 @@ endf
 "如果没有的话，代表没有添加过作者信息，需要新添加；
 "如果有的话，那么只需要更新即可
 func TitleDet()
-    let line = getline(7)
+    let n=7
+    while n<15
+    let line = getline(n)
     if line =~ '^\s\*\s*\S*Last\smodified:\S*.*$'
         call UpdateTitle()
         return
     endif
+    let n = n + 1
+    endwhile
     call AddTitle()
 endf
 
