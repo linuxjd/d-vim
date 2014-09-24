@@ -319,6 +319,8 @@ autocmd FileType nerdtree noremap <buffer> <c-l> <nop>
 Bundle 'jiangmiao/auto-pairs'
 Bundle 'pangloss/vim-javascript'
 Bundle 'mattn/emmet-vim'
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstal
 Plugin 'mattn/jscomplete-vim'
 "Plugin 'faith/vim-go'
 Bundle 'cespare/vim-golang'
@@ -431,6 +433,8 @@ func! CompileRunGcc()
         exec "!time python2.7 %"
     elseif &filetype == 'html'
         exec "!firefox % &"
+    elseif &filetype == 'php'
+        exec "!time php %"
     elseif &filetype == 'sh'
         :!time bash %
     endif
